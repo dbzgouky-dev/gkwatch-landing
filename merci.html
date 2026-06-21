@@ -12,18 +12,23 @@
         .icon { font-size: 64px; margin-bottom: 16px; }
         h1 { font-size: 28px; margin-bottom: 12px; color: #fff; }
         p { color: #a1a1aa; margin-bottom: 8px; font-size: 16px; }
-        .btn { display: inline-block; margin-top: 24px; padding: 12px 24px; background: #22c55e; color: #000; border-radius: 6px; text-decoration: none; font-weight: 600; }
+        .btn { display: inline-block; margin-top: 24px; padding: 14px 32px; background: #22c55e; color: #000; border-radius: 8px; text-decoration: none; font-weight: 700; font-size: 16px; transition: .2s; }
+        .btn:hover { background: #16a34a; transform: translateY(-1px); }
+        .btn-small { display: inline-block; margin-top: 12px; padding: 10px 20px; background: #27272a; color: #e4e4e7; border: 1px solid #3f3f46; border-radius: 6px; text-decoration: none; font-size: 14px; }
+        .btn-small:hover { background: #3f3f46; }
         .email { color: #22c55e; text-decoration: none; }
+        .help { margin-top: 32px; font-size: 13px; color: #52525b; }
     </style>
 </head>
 <body>
     <div class="card">
         <div class="icon">🎉</div>
         <h1>Merci pour ton achat !</h1>
-        <p>Le pack GKWatch t'a été envoyé par email.</p>
-        <p>Si tu ne reçois rien dans les 5 minutes, écris-nous :</p>
-        <p><a class="email" href="mailto:contact@gk365.fr">contact@gk365.fr</a></p>
-        <a class="btn" href="https://gkwatch.gk365.fr">Retour à l'accueil</a>
+        <p>GKWatch Pack Surveillance est à toi.</p>
+        <a class="btn" href="gkwatch-pack-v1.zip">📦 Télécharger le pack (14 Ko)</a>
+        <br>
+        <a class="btn-small" href="https://gkwatch.gk365.fr">← Retour à l'accueil</a>
+        <p class="help">Problème de téléchargement ? Écris-nous : <a class="email" href="mailto:contact@gk365.fr">contact@gk365.fr</a></p>
     </div>
 </body>
 </html>
