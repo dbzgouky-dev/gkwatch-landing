@@ -4,10 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GKWatch — Veille concurrentielle automatisée</title>
-<meta name="description" content="Surveillez vos concurrents automatiquement. Alertes multi-canaux, résumés IA, prospection intégrée. Gratuit, Starter 19€/mois ou Pro 49€/mois.">
-<meta name="keywords" content="veille concurrentielle, monitoring site web, détection changements, alerte concurrent, surveillance automatique">
-<link rel="icon" href="favicon.ico">
-<meta name="robots" content="index, follow">
+<meta name="description" content="Surveillez vos concurrents automatiquement. Alertes Telegram, résumés IA, prospection intégrée. Gratuit, Starter 19€/mois ou Pro 49€/mois.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔍</text></svg>">
 <style>
   :root {
     --bg: #0a0a0f;
@@ -19,6 +17,7 @@
     --accent2: #00cec9;
     --green: #00b894;
     --orange: #fdcb6e;
+    --red: #e17055;
     --max-w: 1200px;
   }
   * { margin:0; padding:0; box-sizing:border-box; }
@@ -29,22 +28,34 @@
     line-height: 1.6;
   }
   .container { max-width: var(--max-w); margin: 0 auto; padding: 0 20px; }
+
+  /* Header */
   header {
     padding: 20px 0;
     border-bottom: 1px solid var(--border);
     background: var(--surface);
   }
-  header .container { display: flex; justify-content: space-between; align-items: center; }
+  header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
   .logo { font-size: 1.5rem; font-weight: 700; }
   .logo span { color: var(--accent); }
   .nav-links { display: flex; gap: 24px; }
-  .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.9rem; }
+  .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.9rem; transition: color .2s; }
   .nav-links a:hover { color: var(--text); }
-  .hero { padding: 100px 0 60px; text-align: center; }
+
+  /* Hero */
+  .hero {
+    padding: 100px 0 60px;
+    text-align: center;
+  }
   .hero h1 { font-size: 3rem; font-weight: 800; margin-bottom: 20px; line-height: 1.2; }
   .hero h1 span { background: linear-gradient(135deg, var(--accent), var(--accent2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
   .hero p { font-size: 1.2rem; color: var(--muted); max-width: 600px; margin: 0 auto 30px; }
   .hero-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
   .btn {
     display: inline-block;
     padding: 12px 32px;
@@ -53,6 +64,7 @@
     font-weight: 600;
     font-size: 1rem;
     transition: all .2s;
+    cursor: pointer;
   }
   .btn-primary {
     background: linear-gradient(135deg, var(--accent), #a29bfe);
@@ -65,6 +77,8 @@
     border: 1px solid var(--border);
   }
   .btn-secondary:hover { border-color: var(--accent); }
+
+  /* Features quick */
   .features-quick {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -77,48 +91,89 @@
     border-radius: 12px;
     padding: 24px;
     text-align: center;
+    transition: border-color .2s;
   }
   .feature-card:hover { border-color: var(--accent); }
   .feature-card .icon { font-size: 2rem; margin-bottom: 12px; }
   .feature-card h3 { font-size: 1.1rem; margin-bottom: 8px; }
   .feature-card p { font-size: 0.9rem; color: var(--muted); }
-  .pricing { padding: 60px 0; }
-  .pricing h2 { text-align: center; font-size: 2rem; margin-bottom: 40px; }
-  .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 24px; }
+
+  /* Pricing */
+  .pricing {
+    padding: 60px 0;
+  }
+  .pricing h2 {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 40px;
+  }
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+  }
   .pricing-card {
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: 16px;
     padding: 32px;
     position: relative;
+    transition: all .3s;
     display: flex;
     flex-direction: column;
   }
   .pricing-card:hover { border-color: var(--accent); transform: translateY(-4px); }
-  .pricing-card.featured { border-color: var(--accent); box-shadow: 0 0 30px rgba(108,92,231,0.15); }
+  .pricing-card.featured {
+    border-color: var(--accent);
+    box-shadow: 0 0 30px rgba(108,92,231,0.15);
+  }
   .pricing-card.featured::before {
     content: 'POPULAIRE';
-    position: absolute; top: 12px; right: 12px;
+    position: absolute;
+    top: 12px;
+    right: 12px;
     background: linear-gradient(135deg, var(--accent), var(--accent2));
-    color: #fff; font-size: 0.7rem; font-weight: 700; padding: 4px 10px; border-radius: 20px;
+    color: #fff;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 20px;
   }
   .pricing-card .tier-name { font-size: 1.2rem; font-weight: 600; margin-bottom: 4px; }
   .pricing-card .tier-subtitle { color: var(--muted); font-size: 0.85rem; margin-bottom: 16px; }
-  .pricing-card .price { font-size: 2.5rem; font-weight: 800; margin-bottom: 4px; }
+  .pricing-card .price {
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin-bottom: 4px;
+  }
   .pricing-card .price-sub { color: var(--muted); font-size: 0.9rem; margin-bottom: 20px; }
   .pricing-card .features { flex: 1; margin-bottom: 24px; }
-  .pricing-card .features li { list-style: none; padding: 6px 0; font-size: 0.9rem; }
-  .pricing-card .features li::before { content: '✓ '; color: var(--green); font-weight: 700; }
-  .pricing-card .features li.missing::before { content: '— '; color: var(--muted); }
+  .pricing-card .features li {
+    list-style: none;
+    padding: 6px 0;
+    font-size: 0.9rem;
+  }
+  .pricing-card .features li::before {
+    content: '✓ ';
+    color: var(--green);
+    font-weight: 700;
+  }
+  .pricing-card .features li.missing::before {
+    content: '— ';
+    color: var(--muted);
+  }
   .pricing-card .features li.missing { color: var(--muted); }
   .pricing-card .btn { text-align: center; }
-  .howto { padding: 60px 0; border-top: 1px solid var(--border); }
-  .howto h2 { text-align: center; font-size: 2rem; margin-bottom: 40px; }
-  .steps { max-width: 600px; margin: 0 auto; }
-  .step { display: flex; gap: 16px; margin-bottom: 24px; align-items: flex-start; }
-  .step-num { width: 36px; height: 36px; background: var(--accent); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; flex-shrink: 0; }
-  footer { border-top: 1px solid var(--border); padding: 40px 0; text-align: center; color: var(--muted); font-size: 0.85rem; }
-  footer a { color: var(--accent); }
+
+  /* Footer */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 40px 0;
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.85rem;
+  }
+
   @media (max-width: 768px) {
     .hero h1 { font-size: 2rem; }
     .pricing-grid { grid-template-columns: 1fr; }
@@ -126,13 +181,14 @@
 </style>
 </head>
 <body>
+
 <header>
   <div class="container">
     <div class="logo">🔍 <span>GK</span>Watch</div>
     <div class="nav-links">
       <a href="#features">Fonctionnalités</a>
       <a href="#pricing">Tarifs</a>
-      <a href="#howto">Comment ça marche</a>
+      <a href="https://github.com/dbzgouky-dev/gkwatch-core" target="_blank">GitHub</a>
     </div>
   </div>
 </header>
@@ -140,30 +196,30 @@
 <section class="hero">
   <div class="container">
     <h1>Votre veille concurrentielle <span>automatisée</span></h1>
-    <p>Scannez les pages de vos concurrents, détectez chaque changement, recevez une alerte Telegram. Résumés IA intégrés.</p>
+    <p>Scannez les pages de vos concurrents, détectez chaque changement, recevez une alerte Telegram. Résumés IA inclus.</p>
     <div class="hero-actions">
       <a href="#pricing" class="btn btn-primary">Voir les offres</a>
-      <a href="#howto" class="btn btn-secondary">Comment ça marche</a>
+      <a href="https://git.new/gkwatch" class="btn btn-secondary" target="_blank">Code source →</a>
     </div>
   </div>
 </section>
 
-<div class="container" id="features">
-  <div class="features-quick">
+<div class="container">
+  <div class="features-quick" id="features">
     <div class="feature-card">
       <div class="icon">👀</div>
       <h3>Surveillance automatique</h3>
-      <p>Scannez prix, blogs, pages d'accueil, APIs, GitHub. Tout changement = alerte instantanée.</p>
+      <p>Scannez prix, blogs, pages d'accueil, APIs, GitHub. Tout changement = alerte.</p>
     </div>
     <div class="feature-card">
       <div class="icon">🤖</div>
       <h3>Résumés IA (DeepSeek)</h3>
-      <p>Pas juste "la page a changé" — un résumé précis de ce qui a changé et pourquoi c'est important pour vous.</p>
+      <p>Pas juste "la page a changé" — un résumé de ce qui a changé et pourquoi c'est important.</p>
     </div>
     <div class="feature-card">
       <div class="icon">📱</div>
-      <h3>Alertes multi-canaux</h3>
-      <p>Notifications en temps réel sur Telegram, Slack, Email ou webhook. Zéro configuration.</p>
+      <h3>Alertes Telegram</h3>
+      <p>Notifications en temps réel dans votre chat Telegram. Configurable par cible.</p>
     </div>
     <div class="feature-card">
       <div class="icon">🎯</div>
@@ -173,15 +229,248 @@
     <div class="feature-card">
       <div class="icon">🔒</div>
       <h3>Self-hosted</h3>
-      <p>Vos données chez vous. Pas de SaaS externe, zéro dépendance cloud. Python pur.</p>
+      <p>Vos données chez vous. Pas de SaaS, pas d'abonnement serveur. Python pur.</p>
     </div>
     <div class="feature-card">
       <div class="icon">⚡</div>
-      <h3>Prêt en 2 minutes</h3>
-      <p>Unzip, configurer .env, lancer. Pas de Docker, pas de serveur, pas de carte bleue pour tester.</p>
+      <h3>Prêt en 5 minutes</h3>
+      <p>Unzip, .env, init, go. Pas de Docker, pas de dépendances lourdes.</p>
     </div>
   </div>
 </div>
 
+<section class="pricing" id="pricing">
+  <div class="container">
+    <h2>Choisissez votre tier</h2>
+    <div class="pricing-grid">
+
+      <!-- Free -->
+      <div class="pricing-card">
+        <div class="tier-name">GKWatch Free</div>
+        <div class="tier-subtitle">Pour découvrir</div>
+        <div class="price">0 €</div>
+        <div class="price-sub">Open source</div>
+        <ul class="features">
+          <li>3 cibles surveillées</li>
+          <li>Check toutes les 24h</li>
+          <li>Alertes Telegram</li>
+          <li class="missing">Résumés IA</li>
+          <li class="missing">Moteur de prospection</li>
+          <li class="missing">Support prioritaire</li>
+        </ul>
+        <a href="https://github.com/dbzgouky-dev/gkwatch-core" class="btn btn-secondary" target="_blank">Télécharger</a>
+      </div>
+
+      <!-- Starter -->
+      <div class="pricing-card featured">
+        <div class="tier-name">GKWatch Starter</div>
+        <div class="tier-subtitle">Pour indépendants</div>
+        <div class="price">19 €</div>
+        <div class="price-sub">/ mois — sans engagement</div>
+        <ul class="features">
+          <li>5 cibles surveillées</li>
+          <li>Check toutes les 24h</li>
+          <li>Alertes Telegram</li>
+          <li class="missing">Résumés IA</li>
+          <li class="missing">Moteur de prospection</li>
+          <li>Support email</li>
+        </ul>
+        <a href="https://buy.stripe.com/eVq7sNccldQuaZkcY02cg03" class="btn btn-primary" target="_blank">S'abonner</a>
+      </div>
+
+      <!-- Pro -->
+      <div class="pricing-card">
+        <div class="tier-name">GKWatch Pro</div>
+        <div class="tier-subtitle">Pour équipes & scale-ups</div>
+        <div class="price">49 €</div>
+        <div class="price-sub">/ mois — sans engagement</div>
+        <ul class="features">
+          <li>25 cibles surveillées</li>
+          <li>Check toutes les heures</li>
+          <li>Alertes Telegram</li>
+          <li>✅ Résumés IA (DeepSeek)</li>
+          <li>✅ Moteur de prospection</li>
+          <li>Support prioritaire</li>
+        </ul>
+        <a href="https://buy.stripe.com/7sY9AV0tDcMq6J4gac2cg04" class="btn btn-primary" target="_blank">S'abonner</a>
+      </div>
+
+      <!-- Pack -->
+      <div class="pricing-card">
+        <div class="tier-name">GKWatch Pack</div>
+        <div class="tier-subtitle">Lifetime — paiement unique</div>
+        <div class="price">199 €</div>
+        <div class="price-sub">paiement unique · tout inclus</div>
+        <ul class="features">
+          <li>Cibles illimitées</li>
+          <li>Check toutes les 15 min</li>
+          <li>Alertes Telegram</li>
+          <li>✅ Résumés IA (DeepSeek)</li>
+          <li>✅ Moteur de prospection</li>
+          <li>✅ Support prioritaire + dev custom</li>
+        </ul>
+        <a href="https://buy.stripe.com/fZu5kFgsBfYC3wS9LO2cg05" class="btn btn-primary" target="_blank">Acheter à vie</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <p>🔍 GKWatch — Un projet <a href="https://gk365.fr" style="color: var(--accent);">GK365</a></p>
+    <p style="margin-top: 8px;">Paiement sécurisé par Stripe · Licence incluse · Zéro engagement</p>
+  </div>
+</footer>
+<!-- Screenshots section -->
+<section class="screenshots">
+  <div class="container">
+    <h2 style="text-align:center;font-size:2rem;margin-bottom:40px;">Voir GKWatch en action</h2>
+    <p style="text-align:center;color:var(--muted);margin-top:-28px;margin-bottom:32px;">Cliquez sur une image pour l'agrandir</p>
+    <div class="screenshot-grid">
+      <div class="screenshot-card">
+        <div class="screenshot-trigger" onclick="openLightbox('dashboard.webp')">
+          <img src="dashboard.webp" alt="Dashboard GKWatch" loading="lazy" width="100%">
+        </div>
+        <p style="color:var(--muted);font-size:0.85rem;margin-top:12px;">📊 Dashboard web — cibles, statuts, historique des changements</p>
+      </div>
+      <div class="screenshot-card">
+        <div class="screenshot-trigger" onclick="openLightbox('telegram_alert.webp')">
+          <img src="telegram_alert.webp" alt="Alerte Telegram GKWatch" loading="lazy" width="100%">
+        </div>
+        <p style="color:var(--muted);font-size:0.85rem;margin-top:12px;">📱 Exemple d'alerte Telegram — résumés IA + prospects détectés</p>
+      </div>
+    </div>
+  </div>
+</section>
 
 <style>
+.screenshot-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 32px; align-items: start; }
+.screenshot-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 16px; }
+.screenshot-card img { border-radius: 8px; border: 1px solid var(--border); width: 100%; }
+.screenshot-card:hover { border-color: var(--accent); }
+.screenshot-trigger { cursor: pointer; }
+.screenshot-trigger:hover { opacity: 0.9; }
+
+/* Lightbox */
+.lightbox {
+  display: none; position: fixed; z-index: 9999; left: 0; top: 0;
+  width: 100%; height: 100%; background: rgba(0,0,0,0.9);
+  align-items: center; justify-content: center;
+  cursor: pointer;
+}
+.lightbox-content {
+  max-width: 90%; max-height: 90%; object-fit: contain;
+  border-radius: 8px; box-shadow: 0 0 40px rgba(0,0,0,0.5);
+}
+.lightbox-close {
+  position: absolute; top: 20px; right: 30px;
+  color: #fff; font-size: 40px; font-weight: bold;
+  cursor: pointer; z-index: 10000; line-height: 1;
+}
+.lightbox-close:hover { color: #aaa; }
+
+@media (max-width: 768px) {
+  .screenshot-grid { grid-template-columns: 1fr; }
+}
+</style>
+
+<!-- Lightbox overlay -->
+<div id="lightbox" class="lightbox" onclick="closeLightbox()">
+  <span class="lightbox-close">&times;</span>
+  <img class="lightbox-content" id="lightbox-img" alt="Agrandissement">
+</div>
+
+<script>
+function openLightbox(src) {
+  document.getElementById("lightbox-img").src = src;
+  document.getElementById("lightbox").style.display = "flex";
+  document.body.style.overflow = "hidden";
+}
+function closeLightbox() {
+  document.getElementById("lightbox").style.display = "none";
+  document.body.style.overflow = "";
+}
+document.addEventListener("keydown", function(e) {
+  if (e.key === "Escape") closeLightbox();
+});
+</script>
+
+
+
+<!-- Screenshots section -->
+<section class="screenshots">
+  <div class="container">
+    <h2 style="text-align:center;font-size:2rem;margin-bottom:40px;">Voir GKWatch en action</h2>
+    <p style="text-align:center;color:var(--muted);margin-top:-28px;margin-bottom:32px;">Cliquez sur une image pour l'agrandir</p>
+    <div class="screenshot-grid">
+      <div class="screenshot-card">
+        <div class="screenshot-trigger" onclick="openLightbox('dashboard.webp')">
+          <img src="dashboard.webp" alt="Dashboard GKWatch" loading="lazy" width="100%">
+        </div>
+        <p style="color:var(--muted);font-size:0.85rem;margin-top:12px;">📊 Dashboard web — cibles, statuts, historique des changements</p>
+      </div>
+      <div class="screenshot-card">
+        <div class="screenshot-trigger" onclick="openLightbox('telegram_alert.webp')">
+          <img src="telegram_alert.webp" alt="Alerte Telegram GKWatch" loading="lazy" width="100%">
+        </div>
+        <p style="color:var(--muted);font-size:0.85rem;margin-top:12px;">📱 Exemple d'alerte Telegram — résumés IA + prospects détectés</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+.screenshot-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 32px; align-items: start; }
+.screenshot-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 16px; }
+.screenshot-card img { border-radius: 8px; border: 1px solid var(--border); width: 100%; }
+.screenshot-card:hover { border-color: var(--accent); }
+.screenshot-trigger { cursor: pointer; }
+.screenshot-trigger:hover { opacity: 0.9; }
+
+/* Lightbox */
+.lightbox {
+  display: none; position: fixed; z-index: 9999; left: 0; top: 0;
+  width: 100%; height: 100%; background: rgba(0,0,0,0.9);
+  align-items: center; justify-content: center;
+  cursor: pointer;
+}
+.lightbox-content {
+  max-width: 90%; max-height: 90%; object-fit: contain;
+  border-radius: 8px; box-shadow: 0 0 40px rgba(0,0,0,0.5);
+}
+.lightbox-close {
+  position: absolute; top: 20px; right: 30px;
+  color: #fff; font-size: 40px; font-weight: bold;
+  cursor: pointer; z-index: 10000; line-height: 1;
+}
+.lightbox-close:hover { color: #aaa; }
+
+@media (max-width: 768px) {
+  .screenshot-grid { grid-template-columns: 1fr; }
+}
+</style>
+
+<!-- Lightbox overlay -->
+<div id="lightbox" class="lightbox" onclick="closeLightbox()">
+  <span class="lightbox-close">&times;</span>
+  <img class="lightbox-content" id="lightbox-img" alt="Agrandissement">
+</div>
+
+<script>
+function openLightbox(src) {
+  document.getElementById("lightbox-img").src = src;
+  document.getElementById("lightbox").style.display = "flex";
+  document.body.style.overflow = "hidden";
+}
+function closeLightbox() {
+  document.getElementById("lightbox").style.display = "none";
+  document.body.style.overflow = "";
+}
+document.addEventListener("keydown", function(e) {
+  if (e.key === "Escape") closeLightbox();
+});
+</script>
+
+</body>
+</html>
