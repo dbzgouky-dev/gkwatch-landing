@@ -183,6 +183,31 @@
   </div>
 </div>
 
+<section class="screenshots">
+  <div class="container">
+    <h2 style="text-align:center;font-size:2rem;margin-bottom:40px;">Voir GKWatch en action</h2>
+    <div class="screenshot-grid">
+      <div class="screenshot-card">
+        <a href="dashboard.webp" target="_blank"><img src="dashboard.webp" alt="Dashboard GKWatch" loading="lazy" width="100%"></a>
+        <p style="color:var(--muted);font-size:0.85rem;margin-top:12px;">📊 Dashboard web — cibles, statuts, historique des changements</p>
+      </div>
+      <div class="screenshot-card">
+        <a href="telegram_alert.webp" target="_blank"><img src="telegram_alert.webp" alt="Alerte Telegram GKWatch" loading="lazy" width="100%"></a>
+        <p style="color:var(--muted);font-size:0.85rem;margin-top:12px;">📱 Exemple d'alerte Telegram — résumés IA + prospects détectés</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+.screenshots { padding: 60px 0; border-top: 1px solid var(--border); }
+.screenshot-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 32px; align-items: start; }
+.screenshot-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 16px; }
+.screenshot-card img { border-radius: 8px; border: 1px solid var(--border); }
+.screenshot-card:hover { border-color: var(--accent); }
+@media (max-width: 768px) { .screenshot-grid { grid-template-columns: 1fr; } }
+</style>
+
 <section class="pricing" id="pricing">
   <div class="container">
     <h2>Choisissez votre offre</h2>
