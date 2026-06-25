@@ -78,11 +78,20 @@
     background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
     padding: 20px; width: var(--card-w); flex: 0 0 auto;
     transition: border-color .2s, transform .2s;
+    position: relative;
   }
   .feature-card:hover { border-color: var(--accent); transform: translateY(-3px); }
   .feature-card .fc-icon { font-size: 1.6rem; margin-bottom: 8px; }
   .feature-card .fc-title { font-size: 1rem; font-weight: 600; margin-bottom: 6px; }
   .feature-card .fc-desc { font-size: 0.85rem; color: var(--muted); line-height: 1.5; }
+  .feature-card .fc-tier {
+    position: absolute; top: 10px; right: 10px;
+    font-size: 0.6rem; font-weight: 700; padding: 2px 8px; border-radius: 10px;
+    letter-spacing: 0.03em;
+  }
+  .fc-tier.free { background: rgba(0,184,148,0.15); color: var(--green); border: 1px solid rgba(0,184,148,0.3); }
+  .fc-tier.pro  { background: rgba(108,92,231,0.15); color: var(--accent); border: 1px solid rgba(108,92,231,0.3); }
+  .fc-tier.starter { background: rgba(253,203,110,0.15); color: var(--orange); border: 1px solid rgba(253,203,110,0.3); }
 
   /* ─── Screenshots ─── */
   .screenshots-grid {
@@ -130,6 +139,32 @@
   .pricing-card .pc-features li.na::before { content: '— '; color: var(--muted); }
   .pricing-card .pc-features li.na { color: var(--muted); }
   .pricing-card .btn { text-align: center; width: 100%; }
+
+  /* ─── Upsell callout ─── */
+  .upsell-banner {
+    background: rgba(108,92,231,0.08); border: 1px dashed rgba(108,92,231,0.35);
+    border-radius: 8px; padding: 10px 14px; margin-bottom: 14px;
+    text-align: center; font-size: 0.8rem; color: var(--muted);
+  }
+  .upsell-banner strong { color: var(--accent); }
+  .upsell-banner a { color: var(--accent); text-decoration: underline; }
+
+  /* ─── Why upgrade ─── */
+  .upgrade-strip {
+    display: flex; flex-wrap: wrap; gap: 12px; justify-content: center;
+    margin-top: 36px;
+  }
+  .upgrade-item {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 10px; padding: 14px 18px; width: 240px; flex: 0 0 auto;
+    text-align: center;
+  }
+  .upgrade-item .ui-icon { font-size: 1.3rem; margin-bottom: 4px; }
+  .upgrade-item .ui-label { font-size: 0.85rem; font-weight: 600; }
+  .upgrade-item .ui-diff {
+    font-size: 0.75rem; color: var(--green); margin-top: 2px;
+  }
+  .upgrade-item .ui-diff .old { color: var(--muted); text-decoration: line-through; }
 
   /* ─── Footer ─── */
   footer { border-top: 1px solid var(--border); padding: 32px 0; text-align: center; color: var(--muted); font-size: 0.82rem; }
@@ -187,31 +222,37 @@
     <p class="section-sub">Tout ce dont vous avez besoin pour une veille concurrentielle efficace</p>
     <div class="features-grid">
       <div class="feature-card">
+        <span class="fc-tier free">TOUS</span>
         <div class="fc-icon">👀</div>
         <div class="fc-title">Surveillance automatique</div>
         <div class="fc-desc">Scannez prix, blogs, pages d'accueil, APIs, GitHub. Tout changement = alerte instantanée.</div>
       </div>
       <div class="feature-card">
+        <span class="fc-tier pro">PRO</span>
         <div class="fc-icon">🤖</div>
         <div class="fc-title">Résumés IA (DeepSeek)</div>
         <div class="fc-desc">Pas juste "la page a changé" — un résumé précis de ce qui a changé et pourquoi c'est important.</div>
       </div>
       <div class="feature-card">
+        <span class="fc-tier free">TOUS</span>
         <div class="fc-icon">📱</div>
         <div class="fc-title">Alertes multi-canaux</div>
         <div class="fc-desc">Notifications en temps réel sur Telegram, email, Slack ou webhook. Configurable par cible.</div>
       </div>
       <div class="feature-card">
+        <span class="fc-tier pro">PRO</span>
         <div class="fc-icon">🎯</div>
         <div class="fc-title">Prospection intégrée</div>
         <div class="fc-desc">Show HN, ProductHunt, GitHub Trending, TechCrunch. Trouvez vos futurs clients automatiquement.</div>
       </div>
       <div class="feature-card">
+        <span class="fc-tier free">TOUS</span>
         <div class="fc-icon">🔒</div>
         <div class="fc-title">Self-hosté</div>
         <div class="fc-desc">Vos données chez vous. Pas de SaaS, pas d'abonnement serveur. Python pur, zéro dépendance lourde.</div>
       </div>
       <div class="feature-card">
+        <span class="fc-tier free">TOUS</span>
         <div class="fc-icon">⚡</div>
         <div class="fc-title">Prêt en 5 minutes</div>
         <div class="fc-desc">Unzip, .env, init, go. Licence Stripe incluse, dashboard web automatique.</div>
@@ -262,10 +303,13 @@
           <li class="na">Moteur de prospection</li>
           <li class="na">Support prioritaire</li>
         </ul>
+        <div class="upsell-banner">
+          🔓 <strong>Débloquez +2 cibles</strong> → <a href="#starter">Starter 19€/mois</a>
+        </div>
         <a href="https://github.com/dbzgouky-dev/gkwatch-landing" class="btn btn-secondary" target="_blank">Télécharger</a>
       </div>
 
-      <div class="pricing-card">
+      <div class="pricing-card" id="starter">
         <div class="badge">POPULAIRE</div>
         <div class="pc-tier">GKWatch Starter</div>
         <div class="pc-sub">Pour indépendants</div>
@@ -314,6 +358,29 @@
         <a href="https://buy.stripe.com/fZu5kFgsBfYC3wS9LO2cg05" class="btn btn-primary" target="_blank">Acheter à vie</a>
       </div>
 
+    </div>
+
+    <div class="upgrade-strip">
+      <div class="upgrade-item">
+        <div class="ui-icon">📈</div>
+        <div class="ui-label">Plus de cibles</div>
+        <div class="ui-diff"><span class="old">3</span> → <strong>5</strong> avec Starter</div>
+      </div>
+      <div class="upgrade-item">
+        <div class="ui-icon">🧠</div>
+        <div class="ui-label">Résumés IA</div>
+        <div class="ui-diff"><span class="old">Texte brut</span> → <strong>Résumé DeepSeek</strong></div>
+      </div>
+      <div class="upgrade-item">
+        <div class="ui-icon">🎯</div>
+        <div class="ui-label">Prospection</div>
+        <div class="ui-diff"><span class="old">❌</span> → <strong>Prospects automatiques</strong></div>
+      </div>
+      <div class="upgrade-item">
+        <div class="ui-icon">⚡</div>
+        <div class="ui-label">Fréquence</div>
+        <div class="ui-diff"><span class="old">24h</span> → <strong>Toutes les heures</strong> (Pro)</div>
+      </div>
     </div>
   </div>
 </section>
